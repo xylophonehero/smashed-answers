@@ -3,7 +3,6 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import Layout from '../components/Layout'
 import { Provider } from 'next-auth/client'
 import { AnimatePresence } from 'framer-motion'
-import { QuestionProvider } from '../context/questionContext'
 
 const theme = extendTheme({
   components: {
@@ -36,11 +35,9 @@ function MyApp({ Component, pageProps, router })
   return (
     <ChakraProvider theme={theme}>
       <Provider session={pageProps.session}>
-        <QuestionProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </QuestionProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </Provider>
     </ChakraProvider>
   )
