@@ -18,10 +18,12 @@ import
 } from '@chakra-ui/react';
 import DiamondImage from '../components/DiamondImage';
 import TextBox from '../components/TextBox';
+import ResizeTextArea from '../components/ResizeTextArea'
 
 import { AiFillLike, AiFillDislike } from 'react-icons/ai'
 import { API_URL } from '../utils/urls';
 import { useSession } from 'next-auth/client';
+import ShareIcons from './ShareIcons';
 
 function QuizQuestion({ question, handleNextQuestion, imageLoaded, setImageLoaded, setScore })
 {
@@ -210,19 +212,15 @@ function QuizQuestion({ question, handleNextQuestion, imageLoaded, setImageLoade
             <motion.div
               animate={inputControls}
             >
-              <TextBox>
-                <Textarea
-                  rows="1"
-                  resize="none"
-                  name="userAnswer"
+              <TextBox fullWidth>
+                <ResizeTextArea
                   ref={inputRef}
                   variant="unstyled"
+                  name="userAnswer"
                   color="white"
-                  fontSize="3xl"
+                  fontSize={["2xl", "3xl"]}
                   fontWeight="bold"
                   textAlign="center"
-                  maxLength="100"
-                  // w="100%"
                   autoComplete="off"
                   disabled={showAnswer}
                   style={{ textTransform: 'uppercase' }}
@@ -259,33 +257,40 @@ function QuizQuestion({ question, handleNextQuestion, imageLoaded, setImageLoade
             animate="visible"
           // style={{ width: "100%" }}
           >
-            <HStack spacing="2rem">
+            <VStack spacing="2rem">
+              <HStack spacing="2rem">
+                <Button onClick={handleNextQuestion}>Next question</Button>
 
-              <Button onClick={handleNextQuestion}>Next question</Button>
 
-              {/* <Spacer /> */}
-              {session && !!questionSessionId &&
-                <Box>
-                  <IconButton
-                    colorScheme={rating === 1 ? "blue" : "gray"}
-                    variant="link"
-                    size="lg"
-                    aria-label="like"
-                    icon={<AiFillLike />}
-                    onClick={() => submitRating(1)}
-                  />
-                  <IconButton
-                    colorScheme={rating === -1 ? "red" : "gray"}
-                    variant="link"
-                    size="lg"
-                    aria-label="dislike"
-                    icon={<AiFillDislike />}
-                    onClick={() => submitRating(-1)}
-                  />
-                </Box>}
-              {/* <Spacer /> */}
-              <Text color="white">Question by {question.author.username}</Text>
-            </HStack>
+                <Text color="white">Question by {question.author.username}</Text>
+              </HStack>
+              <HStack spacing="2rem">
+                {session && !!questionSessionId &&
+                  <Box>
+                    <IconButton
+                      colorScheme={rating === 1 ? "blue" : "gray"}
+                      variant="ghost"
+                      size="lg"
+                      aria-label="like"
+                      icon={<AiFillLike />}
+                      isRound
+                      onClick={() => submitRating(1)}
+                    />
+                    <IconButton
+                      colorScheme={rating === -1 ? "red" : "gray"}
+                      variant="ghost"
+                      size="lg"
+                      aria-label="dislike"
+                      isRound
+                      icon={<AiFillDislike />}
+                      onClick={() => submitRating(-1)}
+                    />
+
+                  </Box>}
+                <ShareIcons uid={question.uid} />
+              </HStack>
+
+            </VStack>
           </motion.div>
         </>
       }

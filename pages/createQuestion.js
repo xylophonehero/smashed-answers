@@ -36,6 +36,7 @@ function CreateQuestion()
   const previewRef = useRef(null)
   const fileInputRef = useRef(null)
   const [finishedUpload, setFinishedUpload] = useState(false)
+  const [uid, setUid] = useState("")
 
   const [session, loading] = useSession()
 
@@ -117,6 +118,7 @@ function CreateQuestion()
       })
       const data = await res.json()
       console.log(data)
+      setUid(data.uid)
       setFinishedUpload(true)
       setIsWorking(false)
     } catch (error)
@@ -140,6 +142,7 @@ function CreateQuestion()
           <VStack w="400px" spacing="2rem">
             <Heading>Question successfully created! 🥂</Heading>
             <Button onClick={() => router.reload()}>Create another one?</Button>
+            <ShareIcons uid={uid} />
           </VStack>
           :
           <Box w="400px">

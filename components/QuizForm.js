@@ -28,7 +28,8 @@ function QuizForm(props)
     e.preventDefault()
     const formData = new FormData(e.target)
     const options = Object.fromEntries(formData)
-    router.push(`/quiz?limit=${options.limit}&sort=${options.sort}&new=${options.new}`)
+    console.log(options)
+    router.push(`/quiz?limit=${options.limit}&sort=${options.sort}&new=${options.new === "" ? true : false}`)
   }
 
   return (
@@ -53,8 +54,8 @@ function QuizForm(props)
             </Select>
           </FormControl>
           <FormControl id="new">
-            <FormLabel>New questions</FormLabel>
-            <Switch name="new" defaultChecked />
+            <FormLabel htmlFor="new">New questions</FormLabel>
+            <Switch name="new" id="new" defaultChecked />
           </FormControl>
           <Button type="submit">Let's go!</Button>
         </VStack>

@@ -44,12 +44,11 @@ function Navbar(props)
         </Link>
       </Box>
 
-
       <IconButton
-        display={{ md: "none" }}
+        display={{ base: 'inline-flex', md: "none" }}
         onClick={() => setIsOpen(!isOpen)}
         icon={isOpen ? <GrClose /> : <GiHamburgerMenu />}
-        aria-label="nev-menu"
+        aria-label="nav-menu"
         variant="unstyled"
       />
       <Box

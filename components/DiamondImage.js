@@ -2,12 +2,12 @@
 import { Box } from '@chakra-ui/react'
 import Image from 'next/image'
 
-function DiamondImage({ src, size = "400", onImageLoad })
+function DiamondImage({ src, size = 400, onImageLoad })
 {
   return (
     <Box
-      h={`${size}px`}
-      w={`${size}px`}
+      h={size !== 400 ? `${size}px` : ["200px", "400px"]}
+      w={size !== 400 ? `${size}px` : ["200px", "400px"]}
       bg="yellow"
       style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
       border="2px"

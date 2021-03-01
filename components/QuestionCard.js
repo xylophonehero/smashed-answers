@@ -17,10 +17,15 @@ import
   useToast,
   Input,
   Textarea,
-  useControllableState
+  IconButton,
+  Flex,
+  Spacer,
+  Tooltip,
+  Switch
 } from '@chakra-ui/react'
 import DiamondImage from '../components/DiamondImage';
 import { API_URL } from '../utils/urls';
+import { FiPlus } from 'react-icons/fi'
 
 function QuestionCard({ question, session })
 {
@@ -103,7 +108,7 @@ function QuestionCard({ question, session })
 
   return (
     <>
-      <Box
+      {/* <Box
         bgColor="white"
         p="1rem"
         boxShadow="xl"
@@ -143,7 +148,73 @@ function QuestionCard({ question, session })
         </HStack>
         }
 
+      </Box> */}
+      <Box
+        bgColor="white"
+        p="1rem"
+        boxShadow="xl"
+        borderRadius="20px"
+        w="320px"
+        mx="auto"
+      >
+
+
+        {editMode ?
+          <VStack as="form" onSubmit={handleEdit} justifyContent="space-between" height="full">
+            <Flex w="100%">
+              <Box w="3rem">
+                <Text fontWeight="bold">Public</Text>
+                <Switch name="public" defaultChecked={true} />
+              </Box>
+              <Spacer />
+              <DiamondImage size="150" src={question.pictureClue.url} />
+              <Spacer />
+              <IconButton icon={<FiPlus />} />
+            </Flex>
+            <Textarea defaultValue={question.textClue} name="textClue" />
+            <Input defaultValue={question.answer} name="answer" />
+            <Flex
+              w="100%"
+            >
+              <Button colorScheme="green" type="submit">Confrim</Button>
+              <Spacer />
+              <Button onClick={() => setEditMode(false)}>Cancel</Button>
+            </Flex>
+
+          </VStack>
+          :
+          <VStack justifyContent="space-between" height="full">
+            <Flex w="100%">
+              <Tooltip hasArrow label={`I am a ${true ? 'public' : 'private'} question`} aria-label="A tooltip">
+                <Box
+                  w="3rem"
+                  h="3rem"
+                  borderRadius="1.5rem"
+                  borderWidth="0.5rem"
+                  borderColor="blue.100"
+                  bgColor="green"
+                />
+              </Tooltip>
+              <Spacer />
+              <DiamondImage size="150" src={question.pictureClue.url} />
+              <Spacer />
+              <IconButton icon={<FiPlus />} />
+            </Flex>
+            <Text>{question.textClue}</Text>
+            <Text fontWeight="700">{question.answer}</Text>
+            <Flex
+              w="100%"
+            >
+              <Button onClick={() => setEditMode(true)}>Edit</Button>
+              <Spacer />
+              <Button colorScheme="red" onClick={onOpen}>Delete</Button>
+            </Flex>
+
+          </VStack>
+        }
+
       </Box>
+
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
